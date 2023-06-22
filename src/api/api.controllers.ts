@@ -1,18 +1,21 @@
 import { Controller, Get, Query, Post, Body, Put, Param, Delete } from '@nestjs/common';
-
+import { ApiService } from './api.service';
 
 @Controller("api")
-export class AppController {
- 
+export class ApiController {
+  constructor(private readonly tasksService: ApiService) {}
   @Get()//get all tasks
   findAll() {
-    return "All tasks"
+    console.log("all path")
+    return this.tasksService.findAll();
+
   }
 
   @Post()//add a new task
   create(@Body() body:any) {
     console.log(body.name)
-    return 'Task created';
+    return this.tasksService.create(body);
+
   }
 
   @Get(':id')//get this task
